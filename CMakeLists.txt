@@ -2,11 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 
 project(g1_mj_description VERSION 1.0.0)
 
-if(NOT TARGET mc_mujoco)
+option(HONOR_INSTALL_PREFIX "Whether to install in CMAKE_INSTALL_PREFIX (for nix)" OFF)
+option(SRC_MODE "Use files in the repository instead of installed files" OFF)
+
+if(HONOR_INSTALL_PREFIX)
+  set(MC_MUJOCO_SHARE_DESTINATION "${CMAKE_INSTALL_PREFIX}")
+elseif(NOT TARGET mc_mujoco)
   find_package(mc_mujoco REQUIRED)
 endif()
-
-option(SRC_MODE "Use files in the repository instead of installed files" OFF)
 
 # Supported g1 models (g1=g1_23dof)
 set(g1_models
